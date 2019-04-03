@@ -50,7 +50,7 @@ export class DetailsComponent implements OnInit {
     this.activeRouter.paramMap.subscribe((route: any) => {
 
       this.city = route.params.city;
-      this.weather.getWeatherState(this.city).subscribe((state) => this.state = state);
+      //this.weather.getWeatherState(this.city).subscribe((state) => this.state = state);
       this.weather.getCurrentTemp(this.city).subscribe((temperature) => this.temp = temperature);
       this.weather.getCurrentHum(this.city).subscribe((humidity) => this.hum = humidity);
       this.weather.getCurrentWind(this.city).subscribe((windspeed) => this.wind = windspeed);

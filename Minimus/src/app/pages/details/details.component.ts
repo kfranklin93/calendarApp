@@ -1,14 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { WeatherService } from '../../services/weather/weather.service';
-import { Subscription } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {WeatherService} from '../../services/weather/weather.service';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent implements OnInit, OnDestroy {
+export class DetailsComponent implements OnInit {
 
   city: string;
   state: string;
@@ -39,12 +38,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
   day5State: string;
   day5Temp: number;
 
-  sub1: Subscription;
-  sub2: Subscription;
-  sub3: Subscription;
-  sub4: Subscription;
-  sub5: Subscription;
-
   constructor(public activeRouter: ActivatedRoute, public weather: WeatherService) {
   }
 
@@ -57,11 +50,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.activeRouter.paramMap.subscribe((route: any) => {
 
       this.city = route.params.city;
-      this.sub1 = this.weather.getWeatherState(this.city).subscribe((state) => this.state = state);
-      this.sub2 = this.weather.getCurrentTemp(this.city).subscribe((temperature) => this.temp = temperature);
-      this.sub3 = this.weather.getCurrentHum(this.city).subscribe((humidity) => this.hum = humidity);
-      this.sub4 = this.weather.getCurrentWind(this.city).subscribe((windspeed) => this.wind = windspeed);
-      this.sub5 = this.weather.getForecast(this.city).subscribe((data: any) => {
+      this.weather.getWeatherState(this.city).subscribe((state) => this.state = state);
+      this.weather.getCurrentTemp(this.city).subscribe((temperature) => this.temp = temperature);
+      this.weather.getCurrentHum(this.city).subscribe((humidity) => this.hum = humidity);
+      this.weather.getCurrentWind(this.city).subscribe((windspeed) => this.wind = windspeed);
+      this.weather.getForecast(this.city).subscribe((data: any) => {
         console.log(data);
         for (let i = 0; i < data.length; i++) {
           const date = new Date(data[i].dt_txt).getDay();
@@ -97,14 +90,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     });
 
-  }
-
-  ngOnDestroy() {
-    this.sub1.unsubscribe();
-    this.sub2.unsubscribe();
-    this.sub3.unsubscribe();
-    this.sub4.unsubscribe();
-    this.sub5.unsubscribe();
   }
 
 }
